@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <title>Newton-Verfahren</title>
+    <link rel="stylesheet" href="master.css"/> 
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lte IE 8]>
+    <script language="javascript" type="text/javascript" src="js/flot/excanvas.min.js">
+    </script>
+    <![endif]-->
+
+  </head>
+  <body>
+    <h1>Newton-Verfahren</h1>
+    <div id="plotCont">
+      <span id="arrow"><</span>
+      <div id="plot"> </div>
+
+      <div id="settings">
+        <table id="stable">
+          <caption>Settings</caption>
+          <tr class="tohide"> 
+            <th>Function</th>
+            <td>f(x) = <input type="text" id="function" size="30"
+              value="Math.sin(x * Math.sin(x))"/></td>
+          </tr>
+          <tr class="tohide">
+            <th>start-value</th>
+            <td><input type="number" id="startval" size="8" value="1"/></td>
+          </tr>
+          <tr>
+            <th>x-axis</th>
+            <td>
+              x1: <input type="number" id="xval1" size="8" value="0"/> <br>
+              x2: <input type="number" id="xval2" size="8" value="10"/>
+            </td>
+          </tr>
+          <tr>
+            <th>Number of steps</th>
+            <td id="counter">0</td>
+          </tr>
+          <tr>
+            <th>Newton</th>
+            <td> <input type="button" id="itstep" value="Iterationstep"/> </td>
+          </tr>
+        </table>
+        
+        <div id="overview"></div>
+        <p id="overviewLegend"></p>
+      </div>
+      <table id="steps">
+        <tr>
+          <th class="small">Step</th>
+          <th>x<sub>n</sub></th>
+          <th>x<sub>n</sub> - f(x<sub>n</sub>) / f'(x<sub>n</sub>)</th>
+          <th>f(x)</th>
+          <th>f'(x)</th>
+        </tr>
+      </table>
+    </div>
+    <script src="jquery.js"></script>
+    <script src="flot/jquery.flot.min.js"> </script>
+    <script src="flot/jquery.flot.selection.min.js"></script>
+    <script src="math.js"></script>
+  </body>
+</html>
+  

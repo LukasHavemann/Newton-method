@@ -1,0 +1,243 @@
+*{
+  margin:0;
+  padding:0;
+}
+
+body{
+  background:url("stripe.png"); 
+  font-family:Helvetica, Arial;
+  color:#333;
+}
+
+
+input[type="button"]{
+  background: #333;
+  color:white;
+  padding:5px 15px;
+  border-radius: 8px;
+  border:1px solid #BBB;
+  margin:2px 4px;
+}
+
+input[type="button"]:hover{
+  -webkit-box-shadow: 0 0 10px rgba(0,0,0, 1.0);
+}
+
+h1{
+    text-align:center;
+}
+
+#canvas{
+  width:600px;
+  height:600px;
+  background:white;
+  margin:50px 0 0 50px;
+  border: 1px solid #888;
+  border-radius: 10px;
+  -webkit-box-shadow:0 0 10px rgba(0,0,0, 0.3);
+  padding:5px;
+  z-index:0;
+}
+
+#close{
+  color:white;
+  font-size:15px;
+  font-family: Arial;
+  background: black;
+  
+  
+  border-radius:50px;
+  -moz-border-radius: 50px;
+  -o-border-radius: 50px;
+
+  border: 2px solid white;
+  -webkit-box-shadow: 0 0 10px rgba(0,0,0, 0.5);
+  position:absolute;
+  top:40px;
+  left:40px;
+  text-align:center;
+
+  display:block;
+  height:20px;
+  width:20px;
+  opacity:0.8;
+
+  -webkit-transition: -webkit-transform 0.5s ease-in-out;
+}
+
+#close:hover{
+  cursor:pointer;
+  -webkit-box-shadow: 0 0 10px rgba(0,0,0, 0.8);
+  -webkit-transform: rotate(180deg) scale(1.2);
+  opacity:1;
+}
+
+#close:active{
+  color:#AAA;
+  border:2px solid #AAA;
+  -webkit-box-shadow: 0 0 10px rgba(0,0,0, 1.0);
+}
+
+#plot{
+    width:600px;
+    height:600px;
+    background:white;
+    padding:15px;
+}
+
+#plotCont{
+    position:absolute;
+    padding:10px;
+    background:white;
+    border-radius:10px;
+    border:1px solid #888;
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0, 0.3);
+    width:610px;
+    margin:20px;
+}
+
+#overview{
+    width: 280px;
+    height:280px;
+    margin:auto;
+}
+
+#settings{
+    position:absolute;
+    width:320px;
+    height:600px;
+    background:#E0E0E0;
+    padding:10px;
+    top:20px;
+    right:-340px;
+    z-index:-99;
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0, 0.3);
+    border:1px solid #999;
+    border-radius:0 10px 10px 0;
+    color:black !important;
+}
+
+#stable {
+    color:#333;
+    margin:auto;
+}
+
+#stable caption{
+    font-style:bold;
+    font-size:1.4em;
+    color:#555;
+    border-bottom:2px solid #CCC;
+    padding-bottom:2px;
+}
+
+#stable th{ 
+    border-right: solid 3px #999;
+    text-align: right;
+    padding: 5px;
+    padding-left:0;
+    margin-bottom:10px;
+    color:#555;
+    font-style:italic;
+}
+
+#stable td {
+    padding: 5px;
+    padding-left:10px;
+    line-height:1.4em;
+    width:260px;
+}
+
+#stable td input{
+    background:#E0E0E0;
+    border:none;
+    outline:none;
+    padding:2px 5px;
+    cursor:pointer; 
+    border-bottom: 1px dotted #999;
+}
+
+#stable td input:hover{
+    border-bottom: 1px dotted black;
+}
+
+#stable td input:focus{
+    border-bottom: 1px dotted black;
+}
+
+#stable tr{
+    display:block;
+    margin-bottom:5px;
+
+}
+
+#arrow{
+  color:white;
+  line-height:1.4em;
+  font-size:16px;
+  font-family: Arial;
+  background: #555;
+  
+  
+  border-radius:50px;
+  -moz-border-radius: 50px;
+  -o-border-radius: 50px;
+
+  border: 2px solid white;
+  -webkit-box-shadow: 0 0 10px rgba(0,0,0, 0.5);
+  position:absolute;
+  top:-5px;
+  right:-5px;
+  text-align:center;
+
+  display:block;
+  height:20px;
+  width:20px;
+
+  z-index: 99;
+}
+
+#arrow:hover{
+  cursor:pointer;
+  -webkit-box-shadow: 0 0 10px rgba(0,0,0, 0.8);
+  background:#333;
+}
+
+#arrow:active{
+  color:#AAA;
+  border:2px solid #AAA;
+  -webkit-box-shadow: 0 0 10px rgba(0,0,0, 1.0);
+}
+
+#settings input[type="button"]{
+  background: #555;
+  color:white;
+  padding:5px 15px;
+  border-radius: 8px;
+  margin:2px 4px;
+  border:2px solid white;
+  -webkit-box-shadow: 0 0 2px rgba(0,0,0, 0.8);
+}
+
+#settings input[type="button"]:hover{
+  -webkit-box-shadow: 0 0 10px rgba(0,0,0, 0.8);
+  border:2px solid white;
+}
+
+#steps{
+    margin-top: 20px;
+}
+
+#steps th{
+    background:#EEE;
+    border:2px solid #CCC;
+}
+
+#steps td, th{
+    min-width:100px;
+    padding: 5px 10px;
+
+}
+
+.small{
+    min-width:50px !important;
+}
