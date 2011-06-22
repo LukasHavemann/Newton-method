@@ -1,1 +1,19 @@
-Dies ist eine einfache Implementierung des Newton-Verfahren mit Hilfe des Google-Plugins fplot und jquery. 
+DESCRIPTION
+===========
+
+This is a implementaition of Newton's method for finding successively better approximations to the roots (or zeroes) of a real-valued function. The application uses the Google fplot plugin and jQuery. 
+
+
+Basic Requirements
+==================
+
+The applicaition works with Internet Explorer 6+, Firefox 2.x+, Safari 3.0+, Opera 9.5+ and Konqueror 4.x+ with the HTML canvas tag (the excanvas Javascript emulation helper is used for IE < 9). 
+
+
+LICENCE
+=======
+
+Creative Commons 3.0 Attribution-NonCommercial-ShareAlike 3.0 Unported  (CC BY-NC-SA 3.0) 
+http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode
+
+by Lukas Havemann
