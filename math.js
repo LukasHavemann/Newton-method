@@ -1,151 +1,99 @@
 //math.js by Lukas Havemann
 
-function assert(cond, msg){
-    if(!cond){
-        console.log("Assertion failed: " + msg)
-    }    
+//The Options for the big plot-view
+var plotOptions = {
+    legend:{ 
+        show: false 
+    }, 
+
+    series:{
+        lines:{ 
+            show: true 
+        },
+        shadowSize: 0
+    },
+
+    yaxis:{ 
+        ticks: 10 
+    },
+
+    selection:{ 
+        mode: "xy" 
+    },
+
+    grid:{
+        backgroundColor: { 
+            colors: ["#fff", "#eee"]
+        },
+
+        markings : [
+            {
+                color: '#000', 
+                lineWidth: 1, 
+                yaxis:{ 
+                    from: 0, 
+                    to  : 0, 
+                }
+            },
+            {
+                color: '#000',
+                lineWidth: 1,
+                xaxis:{
+                    from: 0,
+                    to  : 0
+                },
+
+                //the range should be big enough ;-)
+                yaxis:{
+                    from:  1E100,
+                    to  : -1E100
+                }
+            }
+        ]
+    }
+};
+
+//Options for the Overview plot
+var overviewOptions = {
+    legend:{
+        show: true, 
+        container: $("#overviewLegend") 
+    },
+
+    series:{
+        lines:{
+            show: true, 
+            lineWidth: 1 
+        },
+        shadowSize: 2
+    },
+
+    grid:{
+        color: "#666", 
+        backgroundColor:{ 
+            colors: ["#fff", "#eee"] 
+        } 
+    },
+
+    selection:{ 
+        mode: "xy" 
+    }
 }
 
 function diff(func, x){
     var delta = 1e-15
-    assert(delta != NaN, "delta shoulden't be NaN")
     return (func(x+delta) - func(x-delta)) / ((x+delta) - (x-delta))
 }
 
-function test(cond, msg){
-    if(cond)
-        console.log("[SUCCESS] Test of " + msg + " was successfull")
-    else
-        console.log("[ERROR] Test of " + msg + " was not successfull")
+//cuts the value to a given precision
+function cut(value, prec){
+    var precision = prec || 100000000;
+    return Math.floor(value * precision) / precision;
 }
 
-function testModule(){
-    console.log("Running unit tests...")
-    test(diff(function(x){ return x*x}, 2.0) == 4.0, "function diff");
-}
-
-function readInput(){
-    $("#function").val()
-    parseInt($("#xval").val())
-}
-
-var getData = function(x1, x2) {
-    var d       = [], 
-        xAchse  = [];
-
-    for (var i = 0; i <= 100; ++i) {
-        var x = x1 + i * (x2 - x1) / 100;
-        d.push([x, Math.sin(x * Math.sin(x))]);
-    }
-
-    return [
-        { 
-            label: "sin(x sin(x))", 
-            data: d 
-        }
-    ];
-}
-
-var plotOptions = {
-    legend:     { show: false }, 
-    series:     {
-        lines:  { show: true },
-    },
-    yaxis:      { ticks: 10 },
-    selection:  { mode: "xy" },
-    grid:       {
-        backgroundColor: { 
-            colors: ["#fff", "#eee"]
-        },
-        markings : [
-            { color: '#000', lineWidth: 1, yaxis: { from: 0, to: 0 } }]
-    }
-};
-
-var overviewOptions = {
-    legend: { show: true, container: $("#overviewLegend") },
-    series: {
-        lines:  { show: true, lineWidth: 1 },
-        shadowSize: 2
-    },
-    grid:   { color: "#666", backgroundColor: { colors: ["#fff", "#eee"] } },
-    selection: { mode: "xy" }
-}
-
-var plot; 
-function plotFunc(){
-    var x1 = parseInt($("#xval1").val()),
-        x2 = parseInt($("#xval2").val());
-
-    var startData = getData(x1, x2);
-    plot = $.plot($("#plot"), startData, plotOptions);
-
-    // setup overview
-    var overview = $.plot($("#overview"), startData, overviewOptions)
-}
-
-function startup(){
-    $("h1").hide() //.fadeOut(6000);
-}
-
-function floor(value){
-    return Math.floor(value * 100000000) /100000000;
-}
-
-$(document).ready(function() {
-    testModule()
-    startup()
-    plotFunc(0, Math.PI * 3)
-
-    $("#arrow").toggle(function(){
-        $("#arrow").html(">");
-        $("#settings").animate({"right" : "5px"});
-    }, function(){
-        $("#arrow").html("<");
-        $("#settings").animate({"right" : "-340px"});
-    });
-
-    var xn = null;
-    $("#itstep").click(function(){
-        $(".tohide").slideUp(1000);
-        var it  = parseInt($("#counter").html()) +1;
-        $("#counter").html(it);
-        eval("var func = function(x){ return " + $("#function").val() +"; }");
-
-        if(xn === null){
-            xn = parseInt($("#startval").val())
-        }
-
-        var fstr = diff(func, xn),
-            f    = func(xn);
-        
-        var tmp = xn - (f / fstr);
-
-        $("#steps").append("<tr><th class=\"small\">"+it+"</th><td>"+floor(xn)+"</td><td>"+
-                            floor(tmp)+"</td><td>"+floor(f)+"</td><td>"+ 
-                            floor(fstr) +"</td></tr>");
-        
-        getData = function(x1, x2) {
-            var d   = []; 
-
-            for (var i=0; i <= 100; i++) {
-                var x = x1 + i * (x2 - x1) / 100;
-                d.push([x, func(x)]);
-            }
-
-            return [
-                { 
-                    label: $("#function").val(), 
-                    data: d 
-                }
-            ];
-        }
-
-        xn = tmp;
-        plotFunc()
-    });
-    // now connect the two
-    
+//Configure flot (Code from flot example)
+var plot, overview; 
+function setupPlot(){
     $("#plot").bind("plotselected", function (event, ranges) {
         // clamp the zooming to prevent eternal zoom
         if (ranges.xaxis.to - ranges.xaxis.from < 0.00001)
@@ -161,10 +109,147 @@ $(document).ready(function() {
                       }));
         
         // don't fire event on the overview to prevent eternal loop
-//        overview.setSelection(ranges, true);
+        overview.setSelection(ranges, true);
     });
+    
     $("#overview").bind("plotselected", function (event, ranges) {
         plot.setSelection(ranges);
     });
-});
+}
 
+function plotFunc(){
+    //getting the range
+    var x1 = parseInt($("#xval1").val()),
+        x2 = parseInt($("#xval2").val());
+
+    if(x1 >= x2){
+        alert("Falsche Range-Angabe!");
+        return false;
+    }
+
+    var data    = getData(x1, x2);
+    plot        = $.plot($("#plot"), data, plotOptions);
+    overview    = $.plot($("#overview"), data, overviewOptions)
+}
+
+//generate the 100 P(x|f(x)) for a given range [x1; x2]
+function applyFunction(x1, x2, f){
+    var data = [];
+    for (var i = 0, x; i <= 100; ++i) {
+        x = x1 + i * (x2 - x1) / 100;
+        data.push([x, f(x)]);
+    }
+
+    return data;
+}
+
+function updateView(xn, fstr, f, it, tmp){
+    $(".tohide").slideUp(1000);
+    $("#counter").html(it);
+
+    $("#steps").append([
+            '<tr><th class="small">', it,
+            "</th><td>", cut(xn), "</td><td>", cut(tmp), 
+            "</td><td>", cut(f),  "</td><td>", cut(fstr), 
+            "</td></tr>"].join(''));
+}
+
+function substitute(string){
+    replacements = {
+        "SIN"   : "Math.sin",
+        "COS"   : "Math.cos",
+        "TAN"   : "Math.tan",
+        "ASIN"  : "Math.asin",
+        "ACOS"  : "Math.acos",
+        "ATAN"  : "Math.atan",
+        "POW"   : "Math.pow",
+        "SQRT"  : "Math.sqrt",
+        "ABS"   : "Math.abs",
+        "LOG"   : "Math.log",
+        "pi"    : "Math.PI",
+        "e"     : "Math.E"
+    }
+
+    for(var key in replacements){
+        for(var i = string.split(key).length-1; i >= 0; i--){
+            string = string.replace(key, replacements[key]);
+        }
+    }
+
+    return string;
+}
+
+//standard implementation will be overided while execution of the application
+var getData = function(x1, x2) {
+    return [
+        { 
+            label: "sin(x sin(x))", 
+            color: "#F00",
+            data : applyFunction(x1, x2, function(x) {
+                return Math.sin(x * Math.sin(x));
+            })  
+        }
+    ];
+}
+
+$(document).ready(function() {
+    setupPlot()
+    plotFunc()
+
+    $("#arrow").toggle(function(){
+        $("#arrow").html(">");
+        $("#settings").animate({"right" : "5px"});
+    }, function(){
+        $("#arrow").html("<");
+        $("#settings").animate({"right" : "-340px"});
+    });
+
+    var xn = null;
+    var funcs = [];
+    $("#itstep").click(function(){
+        var it  = parseInt($("#counter").html()) +1;
+        eval("var func = function(x){ return " + 
+             substitute($("#function").val())  + "; }");
+
+        if(xn === null){
+            xn = parseInt($("#startval").val())
+        }
+
+        var fstr = diff(func, xn),
+            f    = func(xn),
+            tmp  = xn - (f / fstr);
+
+        funcs.push({
+            label : "Tangente " + it,
+            func  : (function(xn){
+                return function(x) {  
+                    return fstr * (x - xn) + f
+                }})(xn)
+        })
+
+        getData = function(x1, x2) {
+            
+            var tmp = [
+                { 
+                    label: $("#function").val(), 
+                    data : applyFunction(x1, x2, func),
+                    color: "#f00"
+                }
+            ];
+            
+            for(var j in funcs){
+                tmp.push({
+                    label : funcs.label,
+                    data  : applyFunction(x1, x2, funcs[j].func),
+                    color : "#999"
+    
+                })
+            }
+            return tmp;
+        }
+
+        updateView(xn, fstr, f, it, tmp)
+        xn = tmp;
+        plotFunc()
+    });
+});

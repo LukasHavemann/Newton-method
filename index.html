@@ -15,6 +15,8 @@
   </head>
   <body>
     <h1>Newton-Verfahren</h1>
+    
+    <div style="position:relative;display:block;" class="clearfix">
     <div id="plotCont">
       <span id="arrow"><</span>
       <div id="plot"> </div>
@@ -25,7 +27,7 @@
           <tr class="tohide"> 
             <th>Function</th>
             <td>f(x) = <input type="text" id="function" size="30"
-              value="Math.sin(x * Math.sin(x))"/></td>
+              value="SIN(x * SIN(x))"/></td>
           </tr>
           <tr class="tohide">
             <th>start-value</th>
@@ -34,8 +36,8 @@
           <tr>
             <th>x-axis</th>
             <td>
-              x1: <input type="number" id="xval1" size="8" value="0"/> <br>
-              x2: <input type="number" id="xval2" size="8" value="10"/>
+              x1: <input type="number" id="xval1" size="8" value="-1"/> <br>
+              x2: <input type="number" id="xval2" size="8" value="2"/>
             </td>
           </tr>
           <tr>
@@ -61,6 +63,10 @@
         </tr>
       </table>
     </div>
+  </div>
+    
+    <footer>Ein Projekt von Lukas Havemann (2011)</footer>
+    
     <script src="jquery.js"></script>
     <script src="flot/jquery.flot.min.js"> </script>
     <script src="flot/jquery.flot.selection.min.js"></script>
